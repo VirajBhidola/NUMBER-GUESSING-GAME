@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            padding: 25px;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #5C6AC4;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Number Guessing Game</h1>
+    <p>Guess a number between 1 and 100:</p>
+    <input type="number" id="guessInput" />
+    <button id="guessButton">Guess</button>
+    <p id="result"></p>
+    <script>
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+        let fontSize = 16; // Initial font size in pixels
+
+        document.getElementById('guessButton').addEventListener('click', function() {
+            const userGuess = parseInt(document.getElementById('guessInput').value);
+            
+            if (!isNaN(userGuess)) { // Check if the input is a valid number
+                attempts++;
+                fontSize += 2; // Increase font size by 2 pixels
+
+                const resultElement = document.getElementById('result');
+                resultElement.style.fontSize = fontSize + 'px'; // Set the new font size
+
+                if (userGuess === randomNumber) {
+                    resultElement.innerHTML = `Congratulations! You guessed the number ${randomNumber} in ${attempts} attempts.`;
+                    resetGame();
+                } else if (userGuess < randomNumber) {
+                    resultElement.innerHTML = 'Too low! Try again.';
+                } else {
+                    resultElement.innerHTML = 'Too high! Try again.';
+                }
+
+                // Clear the input box if the guess is wrong
+                document.getElementById('guessInput').value = '';
+            } else {
+                document.getElementById('result').innerHTML = 'Please enter a valid number.';
+            }
+        });
+
+        function resetGame() {
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            fontSize = 16; // Reset font size to initial value
+            document.getElementById('guessInput').value = '';
+            document.getElementById('result').style.fontSize = fontSize + 'px'; // Reset font size for messages
+        }
+    </script>
+</body>
+</html>
